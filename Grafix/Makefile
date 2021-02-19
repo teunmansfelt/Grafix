@@ -17,10 +17,19 @@ OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.cpp=.o))
 INC = -I headers -I $(PDIR)/vendor/headers
 LDLIBS =
 
+PCH = headers/GF_PCH.hpp
+PCH_HEADERS =
+
 $(TARGET): $(OBJECT)
 	@echo "\nLinking $(NAME)..."
 	@echo "  $(CC) -dynamiclib -fpic -o $@ $(LDLIBS) $^"
 	@$(CC) -dynamiclib -fpic -o $@ $(LDLIBS) $^
+
+$(PCH).gch: $(PCH) $(PCH_HEADERS)
+	@echo "\nPrecompiling headers"
+	@echo "  $(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) $(INC) -o $@ $<"
+	@$(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) $(INC) -o $@ $<
+	@echo "\n"
 
 $(BUILDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(dir $@)
