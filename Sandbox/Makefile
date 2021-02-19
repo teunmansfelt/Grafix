@@ -3,18 +3,18 @@ PDIR = $(abspath ../)
 CC = g++
 CFLAGS = -Wall -std=c++1z
 CDEBUG = -g
-BUILDFLAGS = -DDEBUG
+BUILDFLAGS = -DDEBUG -DSPDLOG_COMPILED_LIB
 
 NAME = Sandbox
 
 TARGET = $(PDIR)/bin/$(NAME)App
 SRCDIR = src
-BUILDDIR = $(PDIR)/bin-int/$(NAME)
+BUILDDIR = ../bin-int/$(NAME)
 
 SOURCES = $(shell find $(SRCDIR) -type f -name *.cpp)
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.cpp=.o))
 
-INC = -I headers -I $(PDIR)/Grafix/headers -I $(PDIR)/vendor/headers
+INC = -I headers -I $(PDIR)/Grafix/headers -I $(PDIR)/vendor/include
 LDLIBS =
 
 $(TARGET): $(OBJECTS)

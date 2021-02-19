@@ -3,7 +3,7 @@ PDIR = $(abspath ../)
 CC = g++
 CFLAGS = -Wall -std=c++1z
 CDEBUG = -g
-BUILDFLAGS = -DDEBUG
+BUILDFLAGS = -DDEBUG -DSPDLOG_COMPILED_LIB
 
 NAME = Grafix
 
@@ -14,16 +14,16 @@ BUILDDIR = ../bin-int/$(NAME)
 SOURCES = $(shell find $(SRCDIR) -type f -name *.cpp)
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.cpp=.o))
 
-INC = -I headers -I $(PDIR)/vendor/headers
-LDLIBS =
+INC = -I headers -I $(PDIR)/vendor/include
+LDLIBS = -L$(PDIR)/bin -lspdlog
 
 PCH = headers/GF_PCH.hpp
 PCH_HEADERS =
 
 $(TARGET): $(OBJECTS)
 	@echo "\nLinking $(NAME)..."
-	@echo "  $(CC) -dynamiclib -fpic -o $@ $(LDLIBS) $^"
-	@$(CC) -dynamiclib -fpic -o $@ $(LDLIBS) $^
+	@echo "  $(CC) -dynamiclib -fpic $^ $(LDLIBS) -o $@"
+	@$(CC) -dynamiclib -fpic $^ $(LDLIBS) -o $@
 
 $(PCH).gch: $(PCH) $(PCH_HEADERS)
 	@echo "\nPrecompiling headers"

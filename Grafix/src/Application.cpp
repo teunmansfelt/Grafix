@@ -1,5 +1,6 @@
 
 #include "Grafix/Application.hpp"
+#include "Grafix/Logger.hpp"
 
 namespace Grafix
 {
