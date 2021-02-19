@@ -9,9 +9,9 @@ NAME = Grafix
 
 TARGET = $(PDIR)/bin/lib$(NAME).dylib
 SRCDIR = src
-BUILDDIR = $(PDIR)/bin-int/$(NAME)
+BUILDDIR = ../bin-int/$(NAME)
 
-SOURCES = $(shell find $(SRCDIR) -type f - name *.cpp)
+SOURCES = $(shell find $(SRCDIR) -type f -name *.cpp)
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.cpp=.o))
 
 INC = -I headers -I $(PDIR)/vendor/headers
@@ -20,7 +20,7 @@ LDLIBS =
 PCH = headers/GF_PCH.hpp
 PCH_HEADERS =
 
-$(TARGET): $(OBJECT)
+$(TARGET): $(OBJECTS)
 	@echo "\nLinking $(NAME)..."
 	@echo "  $(CC) -dynamiclib -fpic -o $@ $(LDLIBS) $^"
 	@$(CC) -dynamiclib -fpic -o $@ $(LDLIBS) $^
@@ -31,7 +31,7 @@ $(PCH).gch: $(PCH) $(PCH_HEADERS)
 	@$(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) $(INC) -o $@ $<
 	@echo "\n"
 
-$(BUILDIR)/%.o: $(SRCDIR)/%.cpp
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(dir $@)
 	@echo "  $(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) $(INC) -c -o $@ $<"
 	@$(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) $(INC) -c -o $@ $<

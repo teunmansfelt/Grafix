@@ -11,18 +11,18 @@ TARGET = $(PDIR)/bin/$(NAME)App
 SRCDIR = src
 BUILDDIR = $(PDIR)/bin-int/$(NAME)
 
-SOURCES = $(shell find $(SRCDIR) -type f - name *.cpp)
+SOURCES = $(shell find $(SRCDIR) -type f -name *.cpp)
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.cpp=.o))
 
 INC = -I headers -I $(PDIR)/Grafix/headers -I $(PDIR)/vendor/headers
 LDLIBS =
 
-$(TARGET): $(OBJECT)
+$(TARGET): $(OBJECTS)
 	@echo "\nLinking $(NAME)..."
 	@echo "  $(CC) -o $@ -L$(PDIR)/bin -lGrafix $(LDLIBS) $^"
 	@$(CC) -o $@ -L$(PDIR)/bin -lGrafix $(LDLIBS) $^
 
-$(BUILDIR)/%.o: $(SRCDIR)/%.cpp
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(dir $@)
 	@echo "  $(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) $(INC) -c -o $@ $<"
 	@$(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) $(INC) -c -o $@ $<
