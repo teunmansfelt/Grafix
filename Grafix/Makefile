@@ -31,10 +31,10 @@ $(PCH).gch: $(PCH) $(PCH_HEADERS)
 	@$(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) $(INC) -o $@ $<
 	@echo "\n"
 
-$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp $(PCH).gch
 	@mkdir -p $(dir $@)
-	@echo "  $(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) $(INC) -c -o $@ $<"
-	@$(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) $(INC) -c -o $@ $<
+	@echo "  $(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) -include $(PCH) $(INC) -c -o $@ $<"
+	@$(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) -include $(PCH) $(INC) -c -o $@ $<
 
 .PHONY: clean
 clean:
