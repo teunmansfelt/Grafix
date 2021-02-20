@@ -3,19 +3,19 @@ PDIR = $(abspath ../)
 .PHONY: update
 update:
 	@echo "\nUpdating libraries..."
-	@update.bash $(PDIR)/vendor
+	@update.bash $(PDIR)
 
-CC = g++
-CFLAGS = -Wall -std=c++1z
-CDEBUG = -g 
-BUILDFLAGS = -DDEBUG $(LIBFLAGS)
+CPPFLAGS = -Wall -std=c++1z
+CFLAGS = -std=c11
 
 TARGET = $(PDIR)/bin/lib$(LIB).a
 SRCDIR = src/$(LIB)
 BUILDDIR = ../bin-int/vendor/$(LIB)
 
-SOURCES = $(shell find $(SRCDIR) -type f -name *.cpp)
-OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.cpp=.o))
+SOURCES = $(shell find $(SRCDIR) -type f -name *.$(EXT))
+OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(EXT)=.o))
+
+INC = -I include -I src
 
 build: $(TARGET)
 
@@ -26,8 +26,13 @@ $(TARGET): $(OBJECTS)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(dir $@)
-	@echo "  $(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) -I include -c -o $@ $<"
-	@$(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) -I include -c -o $@ $<
+	@echo "  g++ $(CPPFLAGS) -D$(BUILDFLAGS) $(INC) -c -o $@ $<"
+	@g++ $(CPPFLAGS) -D$(BUILDFLAGS) $(INC) -c -o $@ $<
+
+$(BUILDDIR)/%.o: $(SRCDIR)/%.c
+	@mkdir -p $(dir $@)
+	@echo "  gcc $(CFLAGS) -D$(BUILDFLAGS) $(INC) -c -o $@ $<"
+	@gcc $(CFLAGS) -D$(BUILDFLAGS) $(INC) -c -o $@ $<
 
 .PHONY: clean
 clean:
