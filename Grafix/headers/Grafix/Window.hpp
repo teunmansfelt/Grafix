@@ -21,7 +21,7 @@ namespace Grafix
     class Window
     {
     public:
-        using EventCallback = std::function<void(Event&)>;
+        using EventCallbackFn = std::function<void(Event&)>;
     
         virtual ~Window()
         {}
@@ -31,7 +31,7 @@ namespace Grafix
         virtual unsigned int GetWidth() const = 0;
         virtual unsigned int GetHeight() const = 0;
 
-        virtual void SetEventCallback(const EventCallback& callback) = 0;
+        virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
         virtual void SetVSync(bool enabled) = 0;
         virtual bool IsVSync() const = 0;
 
