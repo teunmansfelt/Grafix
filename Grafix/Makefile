@@ -15,15 +15,17 @@ SOURCES = $(shell find $(SRCDIR) -type f -name *.cpp)
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.cpp=.o))
 
 INC = -I headers -I $(PDIR)/vendor/include
-LDLIBS = -L$(PDIR)/bin -lspdlog
+LDLIBS = -L$(PDIR)/bin -lspdlog -L$(PDIR)/bin -lglfw
+LDFRAMEWORKS = -framework Cocoa -framework OpenGL -framework IOKit
 
 PCH = headers/GF_PCH.hpp
-PCH_HEADERS =
+PCH_HEADERS = $(shell find $(PDIR)/vendor/include/spdlog -type f -name *.h)
+# PCH_HEADERS += $(PDIR)/Grafix/headers/Logger.hpp
 
 $(TARGET): $(OBJECTS)
 	@echo "\nLinking $(NAME)..."
-	@echo "  $(CC) -dynamiclib -fpic $^ $(LDLIBS) -o $@"
-	@$(CC) -dynamiclib -fpic $^ $(LDLIBS) -o $@
+	@echo "  $(CC) -dynamiclib -fpic $^ $(LDLIBS) $(LDFRAMEWORKS) -o $@"
+	@$(CC) -dynamiclib -fpic $^ $(LDLIBS) $(LDFRAMEWORKS) -o $@
 
 $(PCH).gch: $(PCH) $(PCH_HEADERS)
 	@echo "\nPrecompiling headers"
