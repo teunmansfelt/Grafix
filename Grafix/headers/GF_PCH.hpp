@@ -14,4 +14,6 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include "Grafix/Logger.hpp"
+
 #endif
