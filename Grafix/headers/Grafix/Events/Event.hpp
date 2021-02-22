@@ -30,8 +30,7 @@ namespace Grafix
 
     class Event
     {
-        template <typename T>
-        using EventFunction = std::function<bool(T&)>;
+        friend class EventDispatcher;
 
     public:
         virtual EventType GetType() const = 0;
@@ -43,19 +42,33 @@ namespace Grafix
             return GetCategoryFlags() & category;
         }
 
+    private:
+        bool m_Handled = false;
+    };
+
+    class EventDispatcher
+    {
+        template <typename T>
+        using EventFunction = std::function<bool(T &)>;
+    
+    public:
+        EventDispatcher(Event& event)
+            : m_Event(event)
+        {}
+
         template <typename T>
         bool Dispatch(EventFunction<T> function)
         {
-            if (GetType() == T::GetStaticType())
+            if (m_Event.GetType() == T::GetStaticType())
             {
-                m_Handled = function(*this);
+                m_Event.m_Handled = function(*(T*)&m_Event);
                 return true;
             }
             return false;
         }
-
+    
     private:
-        bool m_Handled = false;
+        Event& m_Event;
     };
 
     inline std::ostream& operator<<(std::ostream& os, const Event& event)

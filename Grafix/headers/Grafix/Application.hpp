@@ -11,10 +11,13 @@ namespace Grafix
         Application(const std::string& name);
         virtual ~Application();
 
-        void OnEvent(Event& event);
-
-        void Run();
+        void OnEvent(Event &event);
     
+        void Run();
+
+    private:
+        bool OnWindowClose(Event &event);
+
     private:
         std::string m_Name;
         std::unique_ptr<Window> m_Window;
