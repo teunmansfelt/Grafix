@@ -1,6 +1,5 @@
 
 #include "Grafix/Application.hpp"
-#include "Grafix/Logger.hpp"
 
 #include <glfw/glfw3.h>
 
@@ -11,10 +10,16 @@ namespace Grafix
     {
         WindowProperties windowProperties(name.c_str());
         m_Window = std::unique_ptr<Window>(Window::Create(windowProperties));
+        m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
     }
 
     Application::~Application()
     {}
+
+    void Application::OnEvent(Event& event)
+    {
+        GF_CORE_INFO("{0}", event);
+    }
 
     void Application::Run()
     {

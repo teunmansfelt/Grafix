@@ -19,4 +19,4 @@ clean:
 
 .PHONY: clean_vendor
 clean_vendor:
-	@$(MAKE) clean -C vendor
+	@$(MAKE) clean LIB=$(LIB) -C vendor

@@ -11,6 +11,8 @@ namespace Grafix
         Application(const std::string& name);
         virtual ~Application();
 
+        void OnEvent(Event& event);
+
         void Run();
     
     private:

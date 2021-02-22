@@ -7,7 +7,7 @@ namespace Grafix
     enum class EventType
     {
         NONE = 0,
-        WINDOW_CLOSE, WINDOW_RESIZE, WINDOW_FOCUS, WINDOW_LOST_FOCUS,
+        WINDOW_CLOSE, WINDOW_RESIZE, WINDOW_FOCUS,
         KEY_PRESSED, KEY_RELEASED,
         MOUSE_BUTTON_PRESSED, MOUSE_BUTTON_RELEASED, MOUSE_MOVED, MOUSE_SCROLLED
     };
@@ -58,8 +58,8 @@ namespace Grafix
         bool m_Handled = false;
     };
 
-    inline std::ostream& operator<<(std::ostream& os, Event& e)
+    inline std::ostream& operator<<(std::ostream& os, const Event& event)
     {
-        return os << e.ToString();
+        return os << event.ToString();
     }
 }

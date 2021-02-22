@@ -41,20 +41,23 @@ namespace Grafix
     class WindowFocusEvent : public Event
     {
     public:
-        WindowFocusEvent()
+        WindowFocusEvent(bool focused)
+            :m_Focused(focused)
         {}
+
+        inline bool GetFocus() const { return m_Focused; }
 
         EVENT_TYPE (WINDOW_FOCUS)
         EVENT_CATEGORY (EVENT_CATEGORY_APPLICATION)
-    };
 
-    class WindowLostFocusEvent : public Event
-    {
-    public:
-        WindowLostFocusEvent()
-        {}
-
-        EVENT_TYPE (WINDOW_LOST_FOCUS)
-        EVENT_CATEGORY (EVENT_CATEGORY_APPLICATION)
+        std::string ToString() const override
+        {
+            std::stringstream ss;
+            ss << GetName() << ": (focus: " << m_Focused  << ")";
+            return ss.str();
+        }
+        
+    private:
+        bool m_Focused;
     };
 }

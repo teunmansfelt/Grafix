@@ -4,13 +4,13 @@ cwd=$pdir/vendor
 
 mkdir -p .tmp
 
-for LIB in glfw
+for LIB in spdlog glfw
 do
     cd $cwd/_origin/$LIB
     echo "=== $LIB ==="
     echo "--> Retrieving updates"
     status=$(git pull)
-    if [ "$status" == "Already up-to-date." ]
+    if [ "$status" != "Already up-to-date." ]
     then   
         echo "--> Moving files"
         mkdir -p $cwd/src/$LIB

@@ -21,7 +21,8 @@ namespace Grafix
             m_Data.EventCallback = callback; 
         }
         void SetVSync(bool enabled) override;
-        inline bool IsVSync() const override { return m_Data.VSync; } 
+        inline bool IsVSync() const override { return m_Data.VSync; }
+        inline bool IsFocused() const override { return m_Data.Focus; }
 
     private:
         virtual void Init(const WindowProperties& properties);
@@ -35,6 +36,7 @@ namespace Grafix
             std::string Title;
             unsigned int Width, Height;
             bool VSync;
+            bool Focus;
             EventCallbackFn EventCallback;
         };
 

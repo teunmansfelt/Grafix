@@ -30,7 +30,6 @@ $(TARGET): $(OBJECTS_CPP) $(OBJECTS_C) $(OBJECTS_M)
 	@echo "  ar -cr $(TARGET) $^"; ar -cr $(TARGET) $^
 	@echo "  ranlib $(TARGET)"; ranlib $(TARGET)
 
-
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(dir $@)
 	@echo "  g++ $(CPPFLAGS) -D$(BUILDFLAGS) $(INC) -c -o $@ $<"

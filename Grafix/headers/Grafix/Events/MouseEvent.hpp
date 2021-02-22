@@ -7,12 +7,12 @@ namespace Grafix
     class MouseMovedEvent : public Event
     {
     public:
-        MouseMovedEvent(float x, float y)
+        MouseMovedEvent(double x, double y)
             : m_MouseX(x), m_MouseY(y)
         {}
 
-        inline float GetX() const { return m_MouseX; }
-        inline float GetY() const { return m_MouseY; }
+        inline double GetX() const { return m_MouseX; }
+        inline double GetY() const { return m_MouseY; }
 
         EVENT_TYPE (MOUSE_MOVED)
         EVENT_CATEGORY (EVENT_CATEGORY_MOUSE | EVENT_CATEGORY_INPUT)
@@ -25,18 +25,18 @@ namespace Grafix
         }
     
     private:
-        float m_MouseX, m_MouseY;
+        double m_MouseX, m_MouseY;
     };
 
     class MouseScrolledEvent : public Event
     {
     public:
-        MouseScrolledEvent(float xOffset, float yOffset)
+        MouseScrolledEvent(double xOffset, double yOffset)
             : m_XOffset(xOffset), m_YOffset(yOffset)
         {}
 
-        inline float GetXOffset() const { return m_XOffset; }
-        inline float GetYOffset() const { return m_YOffset; }
+        inline double GetXOffset() const { return m_XOffset; }
+        inline double GetYOffset() const { return m_YOffset; }
 
         EVENT_TYPE (MOUSE_SCROLLED)
         EVENT_CATEGORY (EVENT_CATEGORY_MOUSE | EVENT_CATEGORY_INPUT)
@@ -49,16 +49,17 @@ namespace Grafix
         }
 
     private:
-        float m_XOffset, m_YOffset;
+        double m_XOffset, m_YOffset;
     };
 
     class MouseButtonEvent : public Event
     {
-    public:
+    protected:
         MouseButtonEvent(int button)
             : m_Button(button)
         {}
 
+    public:
         inline int GetMouseButton() const { return m_Button; }
 
         EVENT_CATEGORY (EVENT_CATEGORY_MOUSEBUTTON | EVENT_CATEGORY_INPUT)

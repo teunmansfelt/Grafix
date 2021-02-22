@@ -20,7 +20,7 @@ LDFRAMEWORKS = -framework Cocoa -framework OpenGL -framework IOKit
 
 PCH = headers/GF_PCH.hpp
 PCH_HEADERS = $(shell find $(PDIR)/vendor/include/spdlog -type f -name *.h)
-# PCH_HEADERS += $(PDIR)/Grafix/headers/Logger.hpp
+PCH_HEADERS += headers/Grafix/Logger.hpp
 
 $(TARGET): $(OBJECTS)
 	@echo "\nLinking $(NAME)..."
