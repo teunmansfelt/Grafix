@@ -1,12 +1,19 @@
+BUILDMODE = DEBUG
+
 .PHONY: all
 all:
-	@$(MAKE) -C Grafix
-	@$(MAKE) -C Sandbox
+	@$(MAKE) BUILDMODE=$(BUILDMODE) -C Grafix
+	@$(MAKE) BUILDMODE=$(BUILDMODE) -C Sandbox
+
+.PHONY: force
+force: clean all
 
 .PHONY: update
 update:
 	@$(MAKE) update -C vendor
+	@echo "\nBuilding spdlog..."
 	@$(MAKE) build LIB=spdlog BUILDFLAGS=SPDLOG_COMPILED_LIB -C vendor
+	@echo "\nBuilding glfw..."
 	@$(MAKE) build LIB=glfw BUILDFLAGS=_GLFW_COCOA -C vendor
 
 .PHONY: clean_all

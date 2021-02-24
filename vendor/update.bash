@@ -32,7 +32,7 @@ do
         mv .git* $cwd/.tmp
         rm -rf * .[!.]*
         mv $cwd/.tmp/.git* ./
-       
+
     else
         echo "$status"
     fi
