@@ -3,7 +3,7 @@ PDIR = $(abspath ../)
 CC = g++
 CFLAGS = -Wall -std=c++1z
 CDEBUG = -g
-BUILDFLAGS = -DDEBUG -DSPDLOG_COMPILED_LIB
+BUILDFLAGS = -DSPDLOG_COMPILED_LIB
 
 NAME = Grafix
 
@@ -29,14 +29,14 @@ $(TARGET): $(OBJECTS)
 
 $(PCH).gch: $(PCH) $(PCH_HEADERS)
 	@echo "\nPrecompiling headers"
-	@echo "  $(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) $(INC) -o $@ $<"
-	@$(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) $(INC) -o $@ $<
+	@echo "  $(CC) $(CFLAGS) $(CDEBUG) -D$(BUILDMODE) $(BUILDFLAGS) $(INC) -o $@ $<"
+	@$(CC) $(CFLAGS) $(CDEBUG) -D$(BUILDMODE) $(BUILDFLAGS) $(INC) -o $@ $<
 	@echo "\n"
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp $(PCH).gch
 	@mkdir -p $(dir $@)
-	@echo "  $(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) -include $(PCH) $(INC) -c -o $@ $<"
-	@$(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) -include $(PCH) $(INC) -c -o $@ $<
+	@echo "  $(CC) $(CFLAGS) $(CDEBUG) -D$(BUILDMODE) $(BUILDFLAGS) -include $(PCH) $(INC) -c -o $@ $<"
+	@$(CC) $(CFLAGS) $(CDEBUG) -D$(BUILDMODE) $(BUILDFLAGS) -include $(PCH) $(INC) -c -o $@ $<
 
 .PHONY: clean
 clean:

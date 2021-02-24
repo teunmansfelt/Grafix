@@ -3,7 +3,7 @@ PDIR = $(abspath ../)
 CC = g++
 CFLAGS = -Wall -std=c++1z
 CDEBUG = -g
-BUILDFLAGS = -DDEBUG -DSPDLOG_COMPILED_LIB
+BUILDFLAGS = -DSPDLOG_COMPILED_LIB
 
 NAME = Sandbox
 
@@ -24,8 +24,8 @@ $(TARGET): $(OBJECTS)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(dir $@)
-	@echo "  $(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) $(INC) -c -o $@ $<"
-	@$(CC) $(CFLAGS) $(CDEBUG) $(BUILDFLAGS) $(INC) -c -o $@ $<
+	@echo "  $(CC) $(CFLAGS) $(CDEBUG) -D$(BUILDMODE) $(BUILDFLAGS) $(INC) -c -o $@ $<"
+	@$(CC) $(CFLAGS) $(CDEBUG) -D$(BUILDMODE) $(BUILDFLAGS) $(INC) -c -o $@ $<
 
 .PHONY: clean
 clean:
