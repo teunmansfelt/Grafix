@@ -9,7 +9,7 @@ CPPFLAGS = -Wall -std=c++1z
 CFLAGS = -std=c11 -m64
 
 TARGET = $(PDIR)/bin/lib$(LIB).a
-SRCDIR = src/$(LIB)
+SRCDIR = ./$(LIB)
 BUILDDIR = ../bin-int/vendor/$(LIB)
 
 SOURCES_CPP = $(shell find $(SRCDIR) -type f -name *.cpp)
@@ -21,7 +21,7 @@ OBJECTS_C = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES_C:.c=.o))
 SOURCES_M = $(shell find $(SRCDIR) -type f -name *.m)
 OBJECTS_M = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES_M:.m=.o))
 
-INC = -I include
+INC = -I $(LIB) -I ./
 
 build: $(TARGET)
 

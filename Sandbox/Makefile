@@ -14,7 +14,7 @@ BUILDDIR = ../bin-int/$(NAME)
 SOURCES = $(shell find $(SRCDIR) -type f -name *.cpp)
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.cpp=.o))
 
-INC = -I headers -I $(PDIR)/Grafix/headers -I $(PDIR)/vendor/include
+INC = -I headers -I $(PDIR)/Grafix/headers -I $(PDIR)/vendor
 LDLIBS =
 
 $(TARGET): $(OBJECTS)

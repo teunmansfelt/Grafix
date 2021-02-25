@@ -17,6 +17,8 @@ update:
 	@$(MAKE) build LIB=glfw BUILDFLAGS=-D_GLFW_COCOA -C vendor
 	@echo "\nBuilding glad..."
 	@$(MAKE) build LIB=glad -C vendor
+	@echo "\nBuilding imgui..."
+	@$(MAKE) build LIB=imgui -C vendor
 
 .PHONY: clean_all
 clean_all: clean clean_vendor

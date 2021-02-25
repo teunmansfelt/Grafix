@@ -14,13 +14,13 @@ BUILDDIR = ../bin-int/$(NAME)
 SOURCES = $(shell find $(SRCDIR) -type f -name *.cpp)
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.cpp=.o))
 
-INC = -I headers -I $(PDIR)/vendor/include
-LDLIBS = -L$(PDIR)/bin -lspdlog -L$(PDIR)/bin -lglfw -L$(PDIR)/bin -lglad
+INC = -I headers -I $(PDIR)/vendor
+LDLIBS = -L$(PDIR)/bin -lspdlog -L$(PDIR)/bin -lglfw -L$(PDIR)/bin -lglad -L$(PDIR)/bin -limgui
 LDFRAMEWORKS = -framework Cocoa -framework IOKit
 
 PCH = headers/GF_PCH.hpp
-PCH_HEADERS = $(shell find $(PDIR)/vendor/include/spdlog -type f -name *.h)
-PCH_HEADERS += $(shell find $(PDIR)/vendor/include/glad -type f -name *.h)
+PCH_HEADERS = $(shell find $(PDIR)/vendor/spdlog -type f -name *.h)
+PCH_HEADERS += $(shell find $(PDIR)/vendor/glad -type f -name *.h)
 PCH_HEADERS += headers/Grafix/Logger.hpp
 
 $(TARGET): $(OBJECTS)
