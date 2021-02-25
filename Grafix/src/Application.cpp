@@ -4,7 +4,7 @@
 #include "Grafix/Events/Event.hpp"
 #include "Grafix/Events/ApplicationEvent.hpp"
 
-#include <glfw/glfw3.h>
+#include <glad/glad.h>
 
 namespace Grafix
 {
@@ -26,7 +26,7 @@ namespace Grafix
         m_Running = true;
         while (m_Running)
         {
-            glClearColor(0.0f, 0.15f, 0.3f, 1);
+            glClearColor(0.0f, 0.15f, 0.3f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
             for(Layer* layer : m_LayerStack)

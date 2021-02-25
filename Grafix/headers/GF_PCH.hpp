@@ -14,6 +14,8 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include <glad/glad.h>
+
 #include "Grafix/Logger.hpp"
 
 

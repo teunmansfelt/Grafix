@@ -21,6 +21,7 @@ $(TARGET): $(OBJECTS)
 	@echo "\nLinking $(NAME)..."
 	@echo "  $(CC) -o $@ -L$(PDIR)/bin -lGrafix $(LDLIBS) $^"
 	@$(CC) -o $@ -L$(PDIR)/bin -lGrafix $(LDLIBS) $^
+	@echo ""
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(dir $@)

@@ -7,6 +7,8 @@
 #include "Grafix/Events/MouseEvent.hpp"
 #include "Grafix/Events/ApplicationEvent.hpp"
 
+#include <glad/glad.h>
+
 namespace Grafix
 {
     static void GLFWErrorCallback(int error, const char* message)
@@ -40,8 +42,8 @@ namespace Grafix
         static bool s_GlfwInitialized = false;
         if (!s_GlfwInitialized)
         {
-            int success = glfwInit();
-            GF_CORE_ASSERT(success, "Could not initialize GLFW!");
+            int status = glfwInit();
+            GF_CORE_ASSERT(status, "Could not initialize GLFW!");
             s_GlfwInitialized = true;
 
             glfwSetErrorCallback(GLFWErrorCallback);
@@ -54,6 +56,10 @@ namespace Grafix
 
         m_Window = glfwCreateWindow((int)m_Data.Width, (int)m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);
+
+        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        GF_CORE_ASSERT(status, "Could not initialize GLAD!");
+
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
 

@@ -3,7 +3,7 @@ PDIR = $(abspath ../)
 CC = g++
 CFLAGS = -Wall -std=c++1z
 CDEBUG = -g
-BUILDFLAGS = -DSPDLOG_COMPILED_LIB
+BUILDFLAGS = -DSPDLOG_COMPILED_LIB -DGLFW_INCLUDE_NONE 
 
 NAME = Grafix
 
@@ -15,23 +15,25 @@ SOURCES = $(shell find $(SRCDIR) -type f -name *.cpp)
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.cpp=.o))
 
 INC = -I headers -I $(PDIR)/vendor/include
-LDLIBS = -L$(PDIR)/bin -lspdlog -L$(PDIR)/bin -lglfw
-LDFRAMEWORKS = -framework Cocoa -framework OpenGL -framework IOKit
+LDLIBS = -L$(PDIR)/bin -lspdlog -L$(PDIR)/bin -lglfw -L$(PDIR)/bin -lglad
+LDFRAMEWORKS = -framework Cocoa -framework IOKit
 
 PCH = headers/GF_PCH.hpp
 PCH_HEADERS = $(shell find $(PDIR)/vendor/include/spdlog -type f -name *.h)
+PCH_HEADERS += $(shell find $(PDIR)/vendor/include/glad -type f -name *.h)
 PCH_HEADERS += headers/Grafix/Logger.hpp
 
 $(TARGET): $(OBJECTS)
 	@echo "\nLinking $(NAME)..."
 	@echo "  $(CC) -dynamiclib -fpic $^ $(LDLIBS) $(LDFRAMEWORKS) -o $@"
 	@$(CC) -dynamiclib -fpic $^ $(LDLIBS) $(LDFRAMEWORKS) -o $@
+	@echo ""
 
 $(PCH).gch: $(PCH) $(PCH_HEADERS)
 	@echo "\nPrecompiling headers"
 	@echo "  $(CC) $(CFLAGS) $(CDEBUG) -D$(BUILDMODE) $(BUILDFLAGS) $(INC) -o $@ $<"
 	@$(CC) $(CFLAGS) $(CDEBUG) -D$(BUILDMODE) $(BUILDFLAGS) $(INC) -o $@ $<
-	@echo "\n"
+	@echo ""
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp $(PCH).gch
 	@mkdir -p $(dir $@)

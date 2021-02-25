@@ -12,9 +12,11 @@ force: clean all
 update:
 	@$(MAKE) update -C vendor
 	@echo "\nBuilding spdlog..."
-	@$(MAKE) build LIB=spdlog BUILDFLAGS=SPDLOG_COMPILED_LIB -C vendor
+	@$(MAKE) build LIB=spdlog BUILDFLAGS=-DSPDLOG_COMPILED_LIB -C vendor
 	@echo "\nBuilding glfw..."
-	@$(MAKE) build LIB=glfw BUILDFLAGS=_GLFW_COCOA -C vendor
+	@$(MAKE) build LIB=glfw BUILDFLAGS=-D_GLFW_COCOA -C vendor
+	@echo "\nBuilding glad..."
+	@$(MAKE) build LIB=glad -C vendor
 
 .PHONY: clean_all
 clean_all: clean clean_vendor
