@@ -1,5 +1,5 @@
 
-#include "Grafix/Platform/Mac/MacWindow.hpp"
+#include "Platform/Mac/MacWindow.hpp"
 
 #include "Grafix/Core.hpp"
 

@@ -20,13 +20,11 @@ do
             spdlog)
                 mv src/* $cwd/$LIB           
                 mv include/$LIB/* $cwd/$LIB
-                mv LICENSE $cwd/$LIB/
                 ;;
             
             glfw)
                 mv src/* $cwd/$LIB           
                 mv include/$LIB/* $cwd/$LIB 
-                mv LICENSE.md $cwd/$LIB 
 
                 for file in glx_ linux_ null_ win32_ wgl_ wl_ x11_ posix_time
                 do 
@@ -38,7 +36,6 @@ do
             imgui)
                 mv *.cpp $cwd/$LIB 
                 mv *.h $cwd/$LIB 
-                mv LICENSE.txt $cwd/$LIB 
                 ;;
 
         esac
