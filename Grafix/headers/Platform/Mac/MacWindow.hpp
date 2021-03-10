@@ -22,6 +22,10 @@ namespace Grafix
         inline void SetEventCallback(const EventCallbackFn& callback) override { 
             m_Data.EventCallback = callback; 
         }
+        inline void SetRefreshCallback(const RefreshCallbackFn& callback) override {
+            m_Data.RefreshCallback = callback;
+        }
+
         void SetVSync(bool enabled) override;
         inline bool IsVSync() const override { return m_Data.VSync; }
         inline bool IsFocused() const override { return m_Data.Focus; }
@@ -41,6 +45,7 @@ namespace Grafix
             bool VSync;
             bool Focus;
             EventCallbackFn EventCallback;
+            RefreshCallbackFn RefreshCallback;
         };
 
         WindowData m_Data;

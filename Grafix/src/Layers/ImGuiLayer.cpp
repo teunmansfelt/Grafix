@@ -1,6 +1,7 @@
 
 #include "Grafix/Layers/ImGuiLayer.hpp"
 #include "GF_PCH.hpp"
+#include "Grafix/Core.hpp"
 #include "Grafix/Application.hpp"
 
 #include <imgui/imgui.h>
@@ -9,6 +10,8 @@
 
 namespace Grafix
 {
+    bool ImGuiLayer::s_MouseJustPressed[ImGuiMouseButton_COUNT] = {};
+
     ImGuiLayer::ImGuiLayer()
         : Layer("ImGui Layer")
     {}
@@ -61,8 +64,8 @@ namespace Grafix
 
     void ImGuiLayer::OnUpdate()
     {
-        ImGuiIO &io = ImGui::GetIO();
-        Application &app = Application::GetInstance();
+        ImGuiIO& io = ImGui::GetIO();
+        Application& app = Application::GetInstance();
 
         unsigned int width = app.GetWindow().GetWidth();
         unsigned int height = app.GetWindow().GetHeight();
@@ -76,6 +79,9 @@ namespace Grafix
         io.DeltaTime = m_Time > 0.0f ? (time - m_Time) : (1.0f / 60.0f);
         m_Time = time;
         
+        for (unsigned int i = 0; i < ImGuiMouseButton_COUNT; i++)
+            s_MouseJustPressed[i] = false;
+
         ImGui_ImplOpenGL3_NewFrame();
         ImGui::NewFrame();
 
@@ -87,5 +93,102 @@ namespace Grafix
     }
 
     void ImGuiLayer::OnEvent(Event& event)
-    {}
+    {   
+        EventDispatcher dispatcher(event);
+
+        dispatcher.Dispatch<MouseMovedEvent>(GF_BIND_EVENT_FN(ImGuiLayer::OnMouseMovedEvent));
+        dispatcher.Dispatch<MouseButtonPressedEvent>(GF_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonPressedEvent));
+        dispatcher.Dispatch<MouseButtonReleasedEvent>(GF_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonReleasedEvent));
+        dispatcher.Dispatch<MouseScrolledEvent>(GF_BIND_EVENT_FN(ImGuiLayer::OnMouseScrolledEvent));
+        dispatcher.Dispatch<KeyPressedEvent>(GF_BIND_EVENT_FN(ImGuiLayer::OnKeyPressedEvent));
+        dispatcher.Dispatch<KeyReleasedEvent>(GF_BIND_EVENT_FN(ImGuiLayer::OnKeyReleasedEvent));
+        dispatcher.Dispatch<KeyTypedEvent>(GF_BIND_EVENT_FN(ImGuiLayer::OnKeyTypedEvent));
+    }
+
+    bool ImGuiLayer::OnMouseMovedEvent(MouseMovedEvent &event)
+    {
+        ImGuiIO &io = ImGui::GetIO();
+
+        bool focused = Application::GetInstance().GetWindow().IsFocused();
+        if (focused)
+            io.MousePos = ImVec2((float)event.GetX(), (float)event.GetY());
+        else
+            io.MousePos = ImVec2(-FLT_MAX, -FLT_MAX);
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseButtonPressedEvent(MouseButtonPressedEvent &event)
+    {
+        ImGuiIO &io = ImGui::GetIO();
+
+        int button = event.GetMouseButton();
+        if (button >= 0 && button < ImGuiMouseButton_COUNT)
+            io.MouseDown[button] = s_MouseJustPressed[button] = true;
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseButtonReleasedEvent(MouseButtonReleasedEvent &event)
+    {
+        ImGuiIO &io = ImGui::GetIO();
+
+        int button = event.GetMouseButton();
+        if (button >= 0 && button < ImGuiMouseButton_COUNT)
+            io.MouseDown[button] = s_MouseJustPressed[button];
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseScrolledEvent(MouseScrolledEvent &event)
+    {
+        ImGuiIO &io = ImGui::GetIO();
+        io.MouseWheelH += (float)event.GetXOffset();
+        io.MouseWheel += (float)event.GetYOffset();
+        return false;
+    }
+
+    bool ImGuiLayer::OnKeyPressedEvent(KeyPressedEvent &event)
+    {
+        ImGuiIO &io = ImGui::GetIO();
+        io.KeysDown[event.GetKeyCode()] = true;
+
+        io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
+        io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
+        io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
+    #ifdef _WIN32
+        io.KeySuper = false
+    #else
+        io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+    #endif
+
+        return true;
+    }
+
+    bool ImGuiLayer::OnKeyReleasedEvent(KeyReleasedEvent &event)
+    {
+        ImGuiIO &io = ImGui::GetIO();
+        io.KeysDown[event.GetKeyCode()] = false;
+
+        io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
+        io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
+        io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
+
+    #ifdef _WIN32
+        io.KeySuper = false
+    #else
+        io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+    #endif
+        
+        return true;
+    }
+
+    bool ImGuiLayer::OnKeyTypedEvent(KeyTypedEvent &event)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        unsigned int c = event.GetKeyCode();
+        if (c > 0 && c < 0x10000)
+            io.AddInputCharacter((unsigned short)c);
+        return false;
+    }
 }

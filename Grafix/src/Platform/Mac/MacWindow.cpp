@@ -79,6 +79,13 @@ namespace Grafix
             data.EventCallback(event); 
         });
 
+        glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
+        {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            data.FrameBufferWidth = width;
+            data.FrameBufferHeight = height;
+        });
+
         glfwSetWindowCloseCallback(m_Window, [](GLFWwindow *window) 
         {
             WindowData& data = *(WindowData *)glfwGetWindowUserPointer(window);
@@ -93,6 +100,12 @@ namespace Grafix
 
             WindowFocusEvent event(focused);
             data.EventCallback(event);
+        });
+
+        glfwSetWindowRefreshCallback(m_Window, [](GLFWwindow* window) 
+        {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            data.RefreshCallback();
         });
 
         glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -120,6 +133,13 @@ namespace Grafix
                     break;
                 }
             }
+        });
+
+        glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int key)
+        {
+            WindowData& data = *(WindowData *)glfwGetWindowUserPointer(window);
+            KeyTypedEvent event(key);
+            data.EventCallback(event);
         });
 
         glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)

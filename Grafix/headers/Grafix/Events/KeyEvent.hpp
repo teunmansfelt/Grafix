@@ -57,4 +57,21 @@ namespace Grafix
             return ss.str();
         }
     };
+
+    class KeyTypedEvent : public KeyEvent
+    {
+    public:
+        KeyTypedEvent(int keyCode)
+            : KeyEvent(keyCode)
+        {}
+
+        EVENT_TYPE (KEY_TYPED)
+
+        std::string ToString() const override
+        {
+            std::stringstream ss;
+            ss << GetName() << ": (key: " << m_KeyCode << ")";
+            return ss.str();
+        }
+    };
 }

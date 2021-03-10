@@ -21,6 +21,7 @@ namespace Grafix
     {
     public:
         using EventCallbackFn = std::function<void(Event&)>;
+        using RefreshCallbackFn = std::function<void(void)>;
     
         virtual ~Window()
         {}
@@ -33,6 +34,7 @@ namespace Grafix
         virtual unsigned int GetFrameBufferHeight() const = 0;
 
         virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
+        virtual void SetRefreshCallback(const RefreshCallbackFn& callback) = 0;
         virtual void SetVSync(bool enabled) = 0;
         virtual bool IsVSync() const = 0;
         virtual bool IsFocused() const = 0;

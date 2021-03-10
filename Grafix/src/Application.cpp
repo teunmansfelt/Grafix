@@ -12,7 +12,8 @@
 namespace Grafix
 {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
-    
+#define BIND_VOID_FN(x) std::bind(&Application::x, this)
+
     Application* Application::s_Instance = nullptr;
 
     Application::Application(const std::string& name)
@@ -24,6 +25,7 @@ namespace Grafix
         WindowProperties windowProperties(name.c_str());
         m_Window = std::unique_ptr<Window>(Window::Create(windowProperties));
         m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+        m_Window->SetRefreshCallback(BIND_VOID_FN(OnWindowRefresh));
     }
 
     Application::~Application()
@@ -75,5 +77,16 @@ namespace Grafix
     {
         m_Running = false;
         return true;
+    }
+
+    void Application::OnWindowRefresh()
+    {
+        glClearColor(0.0f, 0.15f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        for (Layer *layer : m_LayerStack)
+            layer->OnUpdate();
+
+        m_Window->OnUpdate();
     }
 }

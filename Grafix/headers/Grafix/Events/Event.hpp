@@ -8,7 +8,7 @@ namespace Grafix
     {
         NONE = 0,
         WINDOW_CLOSE, WINDOW_RESIZE, WINDOW_FOCUS,
-        KEY_PRESSED, KEY_RELEASED,
+        KEY_PRESSED, KEY_RELEASED, KEY_TYPED,
         MOUSE_BUTTON_PRESSED, MOUSE_BUTTON_RELEASED, MOUSE_MOVED, MOUSE_SCROLLED
     };
 
@@ -51,7 +51,7 @@ namespace Grafix
     class EventDispatcher
     {
         template <typename T>
-        using EventFunction = std::function<bool(T &)>;
+        using EventFunction = std::function<bool(T&)>;
     
     public:
         EventDispatcher(Event& event)

@@ -26,6 +26,7 @@ namespace Grafix
 
     private:
         bool OnWindowClose(Event &event);
+        void OnWindowRefresh();
 
     private:
         std::string m_Name;
