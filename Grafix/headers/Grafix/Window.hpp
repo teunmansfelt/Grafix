@@ -29,6 +29,8 @@ namespace Grafix
 
         virtual unsigned int GetWidth() const = 0;
         virtual unsigned int GetHeight() const = 0;
+        virtual unsigned int GetFrameBufferWidth() const = 0;
+        virtual unsigned int GetFrameBufferHeight() const = 0;
 
         virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
         virtual void SetVSync(bool enabled) = 0;

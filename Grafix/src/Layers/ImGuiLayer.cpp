@@ -63,7 +63,14 @@ namespace Grafix
     {
         ImGuiIO &io = ImGui::GetIO();
         Application &app = Application::GetInstance();
-        io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
+
+        unsigned int width = app.GetWindow().GetWidth();
+        unsigned int height = app.GetWindow().GetHeight();
+        unsigned int display_width = app.GetWindow().GetFrameBufferWidth();
+        unsigned int display_height = app.GetWindow().GetFrameBufferHeight();      
+        io.DisplaySize = ImVec2((float)width, (float)height);
+        if (width > 0 && height > 0)
+            io.DisplayFramebufferScale = ImVec2((float)display_width / width, (float)display_height / height);
 
         float time = (float)glfwGetTime();
         io.DeltaTime = m_Time > 0.0f ? (time - m_Time) : (1.0f / 60.0f);

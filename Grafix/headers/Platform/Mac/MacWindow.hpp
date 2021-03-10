@@ -16,6 +16,8 @@ namespace Grafix
 
         inline unsigned int GetWidth() const override { return m_Data.Width; }
         inline unsigned int GetHeight() const override { return m_Data.Height; }
+        inline unsigned int GetFrameBufferWidth() const override { return m_Data.FrameBufferWidth; }
+        inline unsigned int GetFrameBufferHeight() const override { return m_Data.FrameBufferHeight; }
 
         inline void SetEventCallback(const EventCallbackFn& callback) override { 
             m_Data.EventCallback = callback; 
@@ -35,6 +37,7 @@ namespace Grafix
         {
             std::string Title;
             unsigned int Width, Height;
+            unsigned int FrameBufferWidth, FrameBufferHeight;
             bool VSync;
             bool Focus;
             EventCallbackFn EventCallback;

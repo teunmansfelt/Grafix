@@ -57,6 +57,11 @@ namespace Grafix
         m_Window = glfwCreateWindow((int)m_Data.Width, (int)m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);
 
+        int frameBufferWidth, frameBufferHeight;
+        glfwGetFramebufferSize(m_Window, &frameBufferWidth, &frameBufferHeight);
+        m_Data.FrameBufferWidth = (unsigned int)frameBufferWidth;
+        m_Data.FrameBufferHeight = (unsigned int)frameBufferHeight;
+
         int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
         GF_CORE_ASSERT(status, "Could not initialize GLAD!");
 
