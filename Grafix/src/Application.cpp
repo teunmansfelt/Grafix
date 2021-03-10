@@ -1,6 +1,7 @@
 
 #include "Grafix/Application.hpp"
 
+#include "Grafix/Core.hpp"
 #include "Grafix/Events/Event.hpp"
 #include "Grafix/Events/ApplicationEvent.hpp"
 
@@ -9,10 +10,15 @@
 namespace Grafix
 {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
+    
+    std::unique_ptr<Application> Application::s_Instance = nullptr;
 
     Application::Application(const std::string& name)
         : m_Name(name)
-    {
+    {        
+        GF_CORE_ASSERT(!s_Instance, "Application already exists!");
+        s_Instance = std::unique_ptr<Application>(this);
+
         WindowProperties windowProperties(name.c_str());
         m_Window = std::unique_ptr<Window>(Window::Create(windowProperties));
         m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));

@@ -20,6 +20,9 @@ namespace Grafix
     
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* overlay);
+        
+        inline static Application& GetInstance() { return *s_Instance; }
+        inline Window& GetWindow() { return *m_Window; }
 
     private:
         bool OnWindowClose(Event &event);
@@ -30,8 +33,11 @@ namespace Grafix
 
         std::unique_ptr<Window> m_Window;
         LayerStack m_LayerStack;
+    
+    private:
+        static std::unique_ptr<Application> s_Instance;
     };
 
     // To be implemented by the client.
-    Application* CreateApplication();
+    Application& CreateApplication();
 }
