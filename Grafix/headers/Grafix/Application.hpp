@@ -35,9 +35,9 @@ namespace Grafix
         LayerStack m_LayerStack;
     
     private:
-        static std::unique_ptr<Application> s_Instance;
+        static Application* s_Instance;
     };
 
     // To be implemented by the client.
-    Application& CreateApplication();
+    Application* CreateApplication();
 }

@@ -33,7 +33,7 @@ public:
     {}
 };
 
-Grafix::Application& Grafix::CreateApplication()
+Grafix::Application* Grafix::CreateApplication()
 {
-    return *(new SandboxApp());
+    return new SandboxApp();
 }
