@@ -26,6 +26,7 @@ public:
         : Grafix::Application("Grafix Sandbox Application")
     {
         PushLayer(new ExampleLayer());
+        PushOverlay(new Grafix::ImGuiLayer());
     }
 
     ~SandboxApp()

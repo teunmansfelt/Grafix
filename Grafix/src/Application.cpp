@@ -5,6 +5,8 @@
 #include "Grafix/Events/Event.hpp"
 #include "Grafix/Events/ApplicationEvent.hpp"
 
+#include "Grafix/Layers/ImGuiLayer.hpp"
+
 #include <glad/glad.h>
 
 namespace Grafix
