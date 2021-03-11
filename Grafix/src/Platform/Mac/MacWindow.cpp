@@ -13,7 +13,7 @@ namespace Grafix
 {
     static void GLFWErrorCallback(int error, const char* message)
     {
-        GF_CORE_ERROR("GLFW Error ({0}): {1}", error, message);
+        GFX_CORE_ERROR("GLFW Error ({0}): {1}", error, message);
     }
 
     Window* Window::Create(const WindowProperties &properties)
@@ -37,13 +37,13 @@ namespace Grafix
         m_Data.Width = properties.Width;
         m_Data.Height = properties.Height;
 
-        GF_CORE_INFO("Creating window {0} (w:{1}, h:{2})", m_Data.Title, m_Data.Width, m_Data.Height);
+        GFX_CORE_INFO("Creating window {0} (w:{1}, h:{2})", m_Data.Title, m_Data.Width, m_Data.Height);
 
         static bool s_GlfwInitialized = false;
         if (!s_GlfwInitialized)
         {
             int status = glfwInit();
-            GF_CORE_ASSERT(status, "Could not initialize GLFW!");
+            GFX_CORE_ASSERT(status, "Could not initialize GLFW!");
             s_GlfwInitialized = true;
 
             glfwSetErrorCallback(GLFWErrorCallback);
@@ -63,7 +63,7 @@ namespace Grafix
         m_Data.FrameBufferHeight = (unsigned int)frameBufferHeight;
 
         int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-        GF_CORE_ASSERT(status, "Could not initialize GLAD!");
+        GFX_CORE_ASSERT(status, "Could not initialize GLAD!");
 
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);

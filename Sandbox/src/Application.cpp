@@ -10,12 +10,12 @@ public:
 
     void OnUpdate() override
     {
-        GF_INFO("ExampleLayer::Update");
+        GFX_INFO("ExampleLayer::Update");
     }
 
     void OnEvent(Grafix::Event& event) override
     {
-        GF_TRACE("{0}", event);
+        GFX_TRACE("{0}", event);
     }
 };
 

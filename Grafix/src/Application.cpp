@@ -20,7 +20,7 @@ namespace Grafix
     Application::Application(const std::string& name)
         : m_Name(name)
     {        
-        GF_CORE_ASSERT(!s_Instance, "Application already exists!");
+        GFX_CORE_ASSERT(!s_Instance, "Application already exists!");
         s_Instance = this;
 
         WindowProperties windowProperties(name.c_str());
@@ -44,7 +44,7 @@ namespace Grafix
                 layer->OnUpdate();
 
             auto pos = Input::GetMousePos();
-            GF_CORE_TRACE("{0} {1}", pos.first, pos.second);
+            GFX_CORE_TRACE("{0} {1}", pos.first, pos.second);
 
             m_Window->OnUpdate();
         }
@@ -55,7 +55,7 @@ namespace Grafix
         EventDispatcher dispatcher(event);
         dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 
-        GF_CORE_TRACE("{0}", event);
+        GFX_CORE_TRACE("{0}", event);
 
         for (auto iter = m_LayerStack.end(); iter != m_LayerStack.begin(); )
         {

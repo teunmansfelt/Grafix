@@ -18,7 +18,7 @@ INC = -I headers -I $(PDIR)/vendor
 LDLIBS = -L$(PDIR)/bin -lspdlog -L$(PDIR)/bin -lglfw -L$(PDIR)/bin -lglad -L$(PDIR)/bin -limgui
 LDFRAMEWORKS = -framework Cocoa -framework IOKit
 
-PCH = headers/GF_PCH.hpp
+PCH = headers/GFX_PCH.hpp
 PCH_HEADERS = $(shell find $(PDIR)/vendor/spdlog -type f -name *.h)
 PCH_HEADERS += $(shell find $(PDIR)/vendor/glad -type f -name *.h)
 PCH_HEADERS += headers/Grafix/Logger.hpp

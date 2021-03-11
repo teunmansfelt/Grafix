@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Grafix/Core.hpp"
-#include "GF_PCH.hpp"
+#include "GFX_PCH.hpp"
 
 #include "Grafix/Window.hpp"
 #include "Grafix/Layers/LayerStack.hpp"
