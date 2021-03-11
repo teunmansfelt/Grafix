@@ -2,7 +2,7 @@
 #include "Grafix/Application.hpp"
 
 #include "Grafix/Core.hpp"
-#include "Grafix/Input.hpp"
+#include "Grafix/Input/Input.hpp"
 #include "Grafix/Events/Event.hpp"
 #include "Grafix/Events/ApplicationEvent.hpp"
 
@@ -43,9 +43,6 @@ namespace Grafix
             for(Layer* layer : m_LayerStack)
                 layer->OnUpdate();
 
-            auto pos = Input::GetMousePos();
-            GFX_CORE_TRACE("{0} {1}", pos.first, pos.second);
-
             m_Window->OnUpdate();
         }
     }
@@ -55,7 +52,7 @@ namespace Grafix
         EventDispatcher dispatcher(event);
         dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 
-        GFX_CORE_TRACE("{0}", event);
+        // GFX_CORE_TRACE("{0}", event);
 
         for (auto iter = m_LayerStack.end(); iter != m_LayerStack.begin(); )
         {

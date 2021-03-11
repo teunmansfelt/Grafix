@@ -162,7 +162,7 @@ namespace Grafix
         io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
     #endif
 
-        return true;
+        return false;
     }
 
     bool ImGuiLayer::OnKeyReleasedEvent(KeyReleasedEvent &event)
@@ -180,7 +180,7 @@ namespace Grafix
         io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
     #endif
         
-        return true;
+        return false;
     }
 
     bool ImGuiLayer::OnKeyTypedEvent(KeyTypedEvent &event)

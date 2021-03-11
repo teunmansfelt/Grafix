@@ -1,5 +1,5 @@
 
-#include "Grafix/Input.hpp"
+#include "Grafix/Input/Input.hpp"
 
 namespace Grafix
 {

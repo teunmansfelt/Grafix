@@ -88,14 +88,14 @@ namespace Grafix
 
         glfwSetWindowCloseCallback(m_Window, [](GLFWwindow *window) 
         {
-            WindowData& data = *(WindowData *)glfwGetWindowUserPointer(window);
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
             WindowCloseEvent event;
             data.EventCallback(event);
         });
 
         glfwSetWindowFocusCallback(m_Window, [](GLFWwindow* window, int focused)
         {
-            WindowData& data = *(WindowData *)glfwGetWindowUserPointer(window);
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
             data.Focus = focused;
 
             WindowFocusEvent event(focused);
@@ -110,7 +110,7 @@ namespace Grafix
 
         glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
         {
-            WindowData& data = *(WindowData *)glfwGetWindowUserPointer(window);
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
             switch(action)
             {
@@ -137,21 +137,21 @@ namespace Grafix
 
         glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int key)
         {
-            WindowData& data = *(WindowData *)glfwGetWindowUserPointer(window);
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
             KeyTypedEvent event(key);
             data.EventCallback(event);
         });
 
         glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
         {
-            WindowData& data = *(WindowData *)glfwGetWindowUserPointer(window);
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
             MouseMovedEvent event(xPos, yPos);
             data.EventCallback(event);
         });
 
         glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods) 
         {
-            WindowData& data = *(WindowData *)glfwGetWindowUserPointer(window);
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
             switch(action)
             {
@@ -172,7 +172,7 @@ namespace Grafix
 
         glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
         {
-            WindowData& data = *(WindowData *)glfwGetWindowUserPointer(window);
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
             MouseScrolledEvent event(xOffset, yOffset);
             data.EventCallback(event);
         });
