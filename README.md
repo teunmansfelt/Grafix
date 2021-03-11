@@ -17,4 +17,4 @@
 - Gui editor layer built with [Dear ImGui](https://github.com/ocornut/imgui).
 
 ##### Build
-> The compiles with the use of Makefiles and the g++/gcc compiler. All external libraries are compiled into static libraries which are linked with the Grafix Engine. The engine itself compiles into a dynamic link library that can be used by the client application.
+> The project compiles with the use of Makefiles and the g++/gcc compiler. All external libraries are compiled into static libraries which are linked with the Grafix Engine. The engine itself compiles into a dynamic link library that can be used by the client application.
