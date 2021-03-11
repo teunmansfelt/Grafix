@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Grafix/Application.hpp"
+#include "Grafix/Input.hpp"
 #include "Grafix/Logger.hpp"
 #include "Grafix/Layers/Layer.hpp"
 #include "Grafix/Layers/ImGuiLayer.hpp"
