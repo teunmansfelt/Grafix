@@ -30,6 +30,8 @@ namespace Grafix
         inline bool IsVSync() const override { return m_Data.VSync; }
         inline bool IsFocused() const override { return m_Data.Focus; }
 
+        inline void* GetNativeWindow() const override { return m_Window; }
+
     private:
         virtual void Init(const WindowProperties& properties);
         virtual void Shutdown();
